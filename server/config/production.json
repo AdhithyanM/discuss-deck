@@ -1,0 +1,7 @@
+{
+  "env": "production",
+  "mode": "production",
+  "db": {
+    "name": "discuss_deck_production"
+  }
+}

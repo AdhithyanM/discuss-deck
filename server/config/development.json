@@ -1,0 +1,7 @@
+{
+  "env": "development",
+  "mode": "development",
+  "db": {
+    "name": "discuss_deck_dev"
+  }
+}
