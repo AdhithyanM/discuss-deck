@@ -9,11 +9,13 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
+    "build:watch": "tsc -w",
     "start": "node dist/index.js",
     "dev": "nodemon dist/index.js",
-    "start2": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
-    "dev2": "nodemon --exec node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts"
+    "start:esm": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
+    "dev:esm": "nodemon --exec node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
+    "db.premigrate": "yarn build && npx mikro-orm-esm cache:clear && npx mikro-orm-esm cache:generate",
+    "db.migrate": "npx mikro-orm-esm migration:create"
   },
   "dependencies": {
     "@mikro-orm/cli": "^6.2.5",
@@ -33,6 +35,10 @@
     "typescript": "^5.4.5"
   },
   "mikro-orm": {
-    "useTsNode": true
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
   }
 }
