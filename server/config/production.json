@@ -3,5 +3,8 @@
   "mode": "production",
   "db": {
     "name": "discuss_deck_production"
+  },
+  "app": {
+    "port": 80
   }
 }

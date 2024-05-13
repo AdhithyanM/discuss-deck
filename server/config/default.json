@@ -1,0 +1,7 @@
+{
+  "env": "development",
+  "app": {
+    "port": 4000,
+    "name": "discuss-deck-backend"
+  }
+}
