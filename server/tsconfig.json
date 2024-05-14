@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "Node16",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": ["ESNext"],
     "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "moduleResolution": "Node16",
+    "moduleResolution": "Node",
     "removeComments": true,
     "noImplicitAny": true,
+    "strict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
@@ -18,17 +19,17 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "strict": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": "./src",
+    "paths": {
+      "@entities/*": ["entities/*"],
+      "@resolvers/*": ["resolvers/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts"],
-  "ts-node": {
-    "esm": true,
-    "transpileOnly": true
-  }
+  "include": ["./src/**/*.ts"]
 }

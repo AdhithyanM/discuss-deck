@@ -1,7 +1,7 @@
 import config from "config";
 import { Options, PostgreSqlDriver } from "@mikro-orm/postgresql";
 import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
-import { __prod__ } from "./constants.js";
+import { __prod__ } from "./constants";
 import { Migrator, TSMigrationGenerator } from "@mikro-orm/migrations";
 
 const mikroORMConfig: Options = {

@@ -1,10 +1,10 @@
 import config from "config";
 import "reflect-metadata";
 import { MikroORM } from "@mikro-orm/core";
-import mikroORMConfig from "./mikro-orm.config.js";
+import mikroORMConfig from "./mikro-orm.config";
 import express, { Application } from "express";
 import { ApolloServer } from "@apollo/server";
-import { createSchema } from "./schema.js";
+import { createSchema } from "./schema";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import http from "http";

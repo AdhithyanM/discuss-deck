@@ -6,14 +6,11 @@
   "keywords": [],
   "author": "",
   "description": "",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "start": "node dist/index.js",
-    "dev": "nodemon dist/index.js",
-    "start:esm": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
-    "dev:esm": "nodemon --exec node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
+    "run:server": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register ./dist/index.js",
+    "dev:server": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts",
     "db.premigrate": "yarn build && npx mikro-orm-esm cache:clear && npx mikro-orm-esm cache:generate",
     "db.migrate": "npx mikro-orm-esm migration:create"
   },
@@ -38,8 +35,8 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.11",
-    "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   },
   "mikro-orm": {
@@ -48,5 +45,9 @@
       "./src/mikro-orm.config.ts",
       "./dist/mikro-orm.config.js"
     ]
+  },
+  "engines": {
+    "node": ">=22.1.0",
+    "npm": ">=10.7.0"
   }
 }
