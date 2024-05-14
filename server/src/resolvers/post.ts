@@ -1,4 +1,4 @@
-import { Post } from "@entities/Post.entity";
+import { Post } from "@entities/post";
 import { Query, Resolver } from "type-graphql";
 
 @Resolver()
