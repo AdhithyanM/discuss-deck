@@ -11,11 +11,11 @@ export class Post {
   id!: number;
 
   @Field(() => String)
-  @Property({ type: "date" })
+  @Property({ type: "datetime" })
   createdAt = new Date();
 
   @Field(() => String)
-  @Property({ type: "date", onUpdate: () => new Date() })
+  @Property({ type: "datetime", onUpdate: () => new Date() })
   updatedAt = new Date();
 
   @Field()

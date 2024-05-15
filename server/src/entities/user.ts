@@ -1,19 +1,28 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, OptionalProps, PrimaryKey, Property } from "@mikro-orm/core";
+import { Field, Int, ObjectType } from "type-graphql";
 
-@Entity()
+@ObjectType()
+@Entity({ tableName: "users" })
 export class User {
+  [OptionalProps]?: "createdAt" | "updatedAt" | "password";
+
+  @Field(() => Int)
   @PrimaryKey()
   id!: number;
 
-  @Property()
-  fullName!: string;
+  @Field(() => String)
+  @Property({ type: "datetime" })
+  createdAt = new Date();
 
-  @Property()
-  email!: string;
+  @Field(() => String)
+  @Property({ type: "datetime", onUpdate: () => new Date() })
+  updatedAt = new Date();
 
-  @Property()
-  password!: string;
+  @Field(() => String)
+  @Property({ type: "text", unique: true })
+  username!: string;
 
+  // not marking this as field to avoid exposing password in graphql schema
   @Property({ type: "text" })
-  bio = "";
+  password!: string;
 }

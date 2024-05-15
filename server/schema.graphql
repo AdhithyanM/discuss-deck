@@ -3,9 +3,16 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type FieldError {
+  field: String!
+  message: String!
+}
+
 type Mutation {
   createPost(title: String!): Post!
   deletePost(id: Int!): Boolean!
+  login(options: UserRegistrationInput!): UserResponse!
+  register(options: UserRegistrationInput!): UserResponse!
   updatePost(id: Int!, title: String): Post
 }
 
@@ -19,4 +26,21 @@ type Post {
 type Query {
   post(id: Int!): Post
   posts: [Post!]!
+}
+
+type User {
+  createdAt: String!
+  id: Int!
+  updatedAt: String!
+  username: String!
+}
+
+input UserRegistrationInput {
+  password: String!
+  username: String!
+}
+
+type UserResponse {
+  errors: [FieldError!]
+  user: User
 }

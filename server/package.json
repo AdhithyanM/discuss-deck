@@ -11,8 +11,8 @@
     "build:watch": "tsc -w",
     "run:server": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register ./dist/index.js",
     "dev:server": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts",
-    "db.premigrate": "yarn build && npx mikro-orm-esm cache:clear && npx mikro-orm-esm cache:generate",
-    "db.migrate": "npx mikro-orm-esm migration:create"
+    "db:premigration": "yarn build && npx mikro-orm-esm cache:clear && npx mikro-orm-esm cache:generate",
+    "db:migration": "npx mikro-orm-esm migration:create"
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
@@ -21,6 +21,8 @@
     "@mikro-orm/migrations": "^6.2.5",
     "@mikro-orm/postgresql": "^6.2.5",
     "@mikro-orm/reflection": "^6.2.5",
+    "argon2": "^0.40.1",
+    "class-validator": "^0.14.1",
     "config": "^3.3.11",
     "cors": "^2.8.5",
     "express": "^4.19.2",

@@ -74,49 +74,60 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "full_name": {
-          "name": "full_name",
-          "type": "varchar(255)",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
-        "email": {
-          "name": "email",
-          "type": "varchar(255)",
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
-        "password": {
-          "name": "password",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "bio": {
-          "name": "bio",
+        "username": {
+          "name": "username",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "''",
+          "mappedType": "text"
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
           "mappedType": "text"
         }
       },
-      "name": "user",
+      "name": "users",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "user_pkey",
+          "columnNames": [
+            "username"
+          ],
+          "composite": false,
+          "keyName": "users_username_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "users_pkey",
           "columnNames": [
             "id"
           ],
