@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Mutation {
+  createPost(title: String!): Post!
+  deletePost(id: Int!): Boolean!
+  updatePost(id: Int!, title: String): Post
+}
+
 type Post {
   createdAt: String!
   id: Int!
@@ -11,6 +17,6 @@ type Post {
 }
 
 type Query {
-  hello: String!
+  post(id: Int!): Post
   posts: [Post!]!
 }

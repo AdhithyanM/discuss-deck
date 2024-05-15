@@ -1,9 +1,11 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, OptionalProps, PrimaryKey, Property } from "@mikro-orm/core";
 import { Field, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 @Entity({ tableName: "posts" })
 export class Post {
+  [OptionalProps]?: "createdAt" | "updatedAt";
+
   @Field(() => Int)
   @PrimaryKey()
   id!: number;
