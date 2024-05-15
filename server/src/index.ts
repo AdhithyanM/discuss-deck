@@ -28,7 +28,12 @@ const main = async () => {
   app.use(cors<cors.CorsRequest>());
   app.use(express.json());
 
-  app.use("/graphql", expressMiddleware(apolloServer));
+  app.use(
+    "/graphql",
+    expressMiddleware(apolloServer, {
+      context: async () => ({ em: orm.em.fork() }),
+    })
+  );
 
   app.get("/health", (_, res) => {
     res.status(200).send("Okay!");
