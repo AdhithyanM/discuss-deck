@@ -7,6 +7,7 @@ import {
   Arg,
   Ctx,
   ObjectType,
+  Query,
 } from "type-graphql";
 import { Context } from "types";
 import argon2 from "argon2";
@@ -38,10 +39,20 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { req, em }: Context): Promise<User | null> {
+    if (!req.session.userId) {
+      // not logged in.
+      return null;
+    }
+    const user = await em.findOne(User, { id: req.session.userId });
+    return user;
+  }
+
   @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UserRegistrationInput,
-    @Ctx() { em }: Context
+    @Ctx() { em, req }: Context
   ): Promise<UserResponse> {
     const hashedPassword = await argon2.hash(options.password);
     const user = em.create(User, {
@@ -57,6 +68,11 @@ export class UserResolver {
         };
       }
     }
+
+    // store user id in session
+    // this will set a cookie on the user. keeping them logged in
+    req.session.userId = user.id;
+
     return {
       user,
     };
@@ -65,7 +81,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg("options") options: UserRegistrationInput,
-    @Ctx() { em }: Context
+    @Ctx() { em, req }: Context
   ): Promise<UserResponse> {
     const user = await em.findOne(User, { username: options.username });
     if (!user) {
@@ -81,6 +97,8 @@ export class UserResolver {
         errors: [{ field: "password", message: `Incorrect Password.` }],
       };
     }
+
+    req.session.userId = user.id;
 
     return {
       user,

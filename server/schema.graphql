@@ -24,6 +24,7 @@ type Post {
 }
 
 type Query {
+  me: User
   post(id: Int!): Post
   posts: [Post!]!
 }

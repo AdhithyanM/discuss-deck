@@ -4,5 +4,8 @@
     "port": "PGSQL_PORT",
     "user": "PGSQL_USER",
     "password": "PGSQL_PASSWORD"
+  },
+  "redis": {
+    "secretKey": "REDIS_SECRET_KEY"
   }
 }

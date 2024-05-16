@@ -9,11 +9,21 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import http from "http";
 import cors from "cors";
+import session, { CookieOptions } from "express-session";
+import RedisStore from "connect-redis";
+import Redis from "ioredis";
+import { __prod__ } from "./constants";
 
 const main = async () => {
   const orm = await MikroORM.init(mikroORMConfig);
   const migrator = orm.getMigrator();
   await migrator.up();
+
+  const redisClient = new Redis();
+  const redisStore = new RedisStore({
+    client: redisClient,
+    disableTouch: true,
+  });
 
   const app: Application = express();
   const httpServer = http.createServer(app);
@@ -28,10 +38,32 @@ const main = async () => {
   app.use(cors<cors.CorsRequest>());
   app.use(express.json());
 
+  const cookieOptions: CookieOptions = {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    httpOnly: true,
+    sameSite: "lax", // csrf
+    secure: __prod__, // cookie only works in https
+  };
+
+  app.use(
+    session({
+      name: "qid",
+      store: redisStore,
+      cookie: cookieOptions,
+      secret: config.get("redis.secretKey"),
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
+
   app.use(
     "/graphql",
     expressMiddleware(apolloServer, {
-      context: async () => ({ em: orm.em.fork() }),
+      context: async ({ req, res }) => ({
+        em: orm.em.fork(),
+        req,
+        res,
+      }),
     })
   );
 
